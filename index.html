@@ -10,12 +10,29 @@
       background: #111;
       color: #fff;
       margin: 0;
-      padding: 20px;
+      padding: 0;
     }
-    h1 {
+    header {
+      background: #222;
+      padding: 15px;
       text-align: center;
+      box-shadow: 0 0 10px #0ff;
+    }
+    header h1 {
+      margin: 0;
       color: #0ff;
-      margin-bottom: 20px;
+    }
+    nav {
+      margin-top: 10px;
+    }
+    nav a {
+      color: #0ff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+    }
+    main {
+      padding: 20px;
     }
     form {
       max-width: 400px;
@@ -48,30 +65,35 @@
       background: #08f;
       color: #fff;
     }
-    nav {
+    footer {
       text-align: center;
-      margin-bottom: 20px;
-    }
-    nav a {
-      color: #0ff;
-      text-decoration: none;
-      margin: 0 10px;
-      font-weight: bold;
+      padding: 15px;
+      background: #222;
+      color: #888;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <a href="index.html">Booking</a> | 
-    <a href="admin.html">Admin</a>
-  </nav>
-  <h1>Book Your Slot</h1>
-  <form id="bookingForm">
-    <input type="text" id="name" placeholder="Your Name" required />
-    <input type="email" id="email" placeholder="Your Email" required />
-    <input type="datetime-local" id="date" required />
-    <button type="submit">Book Now</button>
-  </form>
+  <header>
+    <h1>Booking System</h1>
+    <nav>
+      <a href="index.html">Booking</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+  <main>
+    <h2 style="text-align:center;">Book Your Slot</h2>
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <input type="datetime-local" id="date" required />
+      <button type="submit">Book Now</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2026 Booking System Demo</p>
+  </footer>
 
   <script>
     document.getElementById("bookingForm").addEventListener("submit", (e) => {
