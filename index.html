@@ -22,21 +22,43 @@
       margin: 0;
       color: #0ff;
     }
-    nav {
-      margin-top: 10px;
-    }
     nav a {
       color: #0ff;
       text-decoration: none;
-      margin: 0 15px;
+      margin: 0 10px;
       font-weight: bold;
     }
     main {
       padding: 20px;
     }
+    .slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .slot {
+      background: #222;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 0 8px #0ff;
+      transition: 0.3s;
+    }
+    .slot:hover {
+      background: #08f;
+      color: #fff;
+    }
+    .slot.selected {
+      background: #0ff;
+      color: #111;
+      font-weight: bold;
+    }
     form {
+      margin-top: 20px;
       max-width: 400px;
-      margin: auto;
+      margin-left: auto;
+      margin-right: auto;
       background: #222;
       padding: 20px;
       border-radius: 12px;
@@ -65,43 +87,56 @@
       background: #08f;
       color: #fff;
     }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #222;
-      color: #888;
-      margin-top: 30px;
-    }
   </style>
 </head>
 <body>
   <header>
     <h1>Booking System</h1>
     <nav>
-      <a href="index.html">Booking</a>
+      <a href="index.html">Booking</a> | 
       <a href="admin.html">Admin</a>
     </nav>
   </header>
   <main>
-    <h2 style="text-align:center;">Book Your Slot</h2>
+    <h2 style="text-align:center;">Pick a Slot</h2>
+    <div class="slots" id="slots"></div>
+
     <form id="bookingForm">
       <input type="text" id="name" placeholder="Your Name" required />
       <input type="email" id="email" placeholder="Your Email" required />
-      <input type="datetime-local" id="date" required />
+      <input type="hidden" id="selectedSlot" required />
       <button type="submit">Book Now</button>
     </form>
   </main>
-  <footer>
-    <p>&copy; 2026 Booking System Demo</p>
-  </footer>
 
   <script>
+    const slots = [
+      "2026-02-20 10:00 AM",
+      "2026-02-20 11:00 AM",
+      "2026-02-20 12:00 PM",
+      "2026-02-20 01:00 PM",
+      "2026-02-20 02:00 PM"
+    ];
+
+    const slotsContainer = document.getElementById("slots");
+    slots.forEach((slot, i) => {
+      const div = document.createElement("div");
+      div.className = "slot";
+      div.innerText = slot;
+      div.onclick = () => {
+        document.querySelectorAll(".slot").forEach(s => s.classList.remove("selected"));
+        div.classList.add("selected");
+        document.getElementById("selectedSlot").value = slot;
+      };
+      slotsContainer.appendChild(div);
+    });
+
     document.getElementById("bookingForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const booking = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
-        date: document.getElementById("date").value,
+        slot: document.getElementById("selectedSlot").value,
         status: "pending"
       };
       let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
@@ -109,6 +144,7 @@
       localStorage.setItem("bookings", JSON.stringify(bookings));
       alert("Booking saved!");
       e.target.reset();
+      document.querySelectorAll(".slot").forEach(s => s.classList.remove("selected"));
     });
   </script>
 </body>
